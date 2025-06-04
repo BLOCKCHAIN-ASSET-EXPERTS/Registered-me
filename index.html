@@ -4,43 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin Base Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .registration-container {
+            max-width: 400px;
+            background: #0070f3;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            color: white;
+            text-align: center;
+        }
+        .registration-container img {
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        .registration-container input[type="text"],
+        .registration-container input[type="email"],
+        .registration-container input[type="tel"],
+        .registration-container input[type="password"] {
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .registration-container button {
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .terms-container {
+            margin: 10px 0;
+            text-align: left;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            color: #222;
+        }
+        #codeSection {
+            display: none;
+            margin-top: 20px;
+        }
+        #codeSection input {
+            width: 80%;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f5f5f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-
-    <div class="registration-container" style="max-width: 400px; background: #0070f3; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); color: white; text-align: center;">
-        <img src="IMG_9859.jpeg" alt="Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 20px;">
-        <h2 style="margin: 10px 0;">COIN BASE SIGN UP</h2>
-        <form id="registrationForm" style="display: flex; flex-direction: column;">
-            <input type="text" placeholder="Name" required style="padding: 10px; margin: 10px 0; border: none; border-radius: 5px;">
-            <input type="email" placeholder="Email" required style="padding: 10px; margin: 10px 0; border: none; border-radius: 5px;">
-            <input type="tel" placeholder="Phone Number" required style="padding: 10px; margin: 10px 0; border: none; border-radius: 5px;">
-            <input type="text" placeholder="Username" required style="padding: 10px; margin: 10px 0; border: none; border-radius: 5px;">
-            <input type="password" placeholder="Password" required style="padding: 10px; margin: 10px 0; border: none; border-radius: 5px;">
-            <div class="terms-container" style="margin: 10px 0;">
-                <input type="checkbox" id="terms" required style="margin-right: 5px;">
-                <label for="terms" style="color: white;">I accept the terms and conditions</label>
+<body>
+    <div class="registration-container">
+        <img src="IMG_9859.jpeg" alt="Logo">
+        <h2>COIN BASE SIGN UP</h2>
+        <form id="registrationForm">
+            <input type="text" id="name" placeholder="Name" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="tel" id="phone" placeholder="Phone Number" required>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <div class="terms-container">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">I accept the terms and conditions</label>
             </div>
-            <button type="submit" style="padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Register</button>
+            <button type="submit">Register</button>
         </form>
-    </div>
-
-    <div id="popup" class="popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center;">
-        <div class="popup-content" style="background: white; padding: 20px; border-radius: 5px; text-align: center;">
-            <img src="IMG_0309.gif" alt="Loading" style="width: 100px; height: 100px;" />
-            <p>Registration loading...</p>
+        <div id="codeSection">
+            <p style="color: white;">A code has been sent to your email. Please enter it below to verify:</p>
+            <input type="text" id="verificationCodeInput" placeholder="Enter verification code" required>
+            <button id="verifyCodeBtn">Verify Code</button>
         </div>
     </div>
-
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <img src="IMG_0309.gif" alt="Loading" style="width: 100px; height: 100px;" />
+            <p id="popupText">Registration loading...</p>
+        </div>
+    </div>
     <script>
+        let generatedCode = '';
         document.getElementById('registrationForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-            document.getElementById('popup').style.display = 'flex'; // Show the popup
+            event.preventDefault();
+            document.getElementById('popup').style.display = 'flex';
+            document.getElementById('popupText').textContent = 'Registration loading...';
 
-            // Simulate a loading process (you can replace this with actual registration logic)
+            // Simulate a loading process and "send" code
             setTimeout(() => {
-                document.getElementById('popup').style.display = 'none'; // Hide the popup after loading
-                alert('Registration successful!'); // Show a success message
-            }, 2000); // Simulate a 2-second loading time
+                document.getElementById('popup').style.display = 'none';
+                // Generate 6-digit code
+                generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+                // Simulate sending code to email (in real life, send from server!)
+                alert('Verification code sent to your email: ' + generatedCode);
+                // Show code input section
+                document.getElementById('codeSection').style.display = 'block';
+                // Hide registration form
+                document.getElementById('registrationForm').style.display = 'none';
+            }, 1500);
+        });
+
+        document.getElementById('verifyCodeBtn').addEventListener('click', function() {
+            const userCode = document.getElementById('verificationCodeInput').value.trim();
+            if (userCode === generatedCode) {
+                alert('Verification successful! You are now logged in.');
+                // Optionally redirect or enable access here
+            } else {
+                alert('Incorrect code. Please try again.');
+            }
         });
     </script>
 </body>
